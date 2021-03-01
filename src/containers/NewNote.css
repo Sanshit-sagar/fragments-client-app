@@ -1,0 +1,26 @@
+.NewNote {
+    background-color: "#f8f9fa";
+}
+
+.NewNote form textarea { 
+    resize: none; 
+    height: 77.75vh; 
+    width: 74.5%; 
+    float: right; 
+    background-color: rgba(30,30,30,1);
+    color: #00970b;
+    text-shadow: 0 0 1.5px #a8a8a8;
+    font: 0.8rem Inconsolata, monospace;
+}
+.NewNote form textarea:focus {
+    resize: none; 
+    height: 77.75vh; 
+    width: 74.5%; 
+    float: right; 
+    background-color: rgba(30,30,30,1);
+    color: #00fd12;
+    text-shadow: 0.7px 0.7px 0.7px #c8c8c8;
+    font: 0.8rem Inconsolata, monospace;
+    caret-color: pink;
+}
+  

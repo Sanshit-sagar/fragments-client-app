@@ -1,0 +1,29 @@
+
+
+.Editor {
+    display: flex; 
+    border: 2px solid black;
+    width: 100%; 
+    height: 70vh;
+}
+
+.Editor {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch; 
+}
+
+
+
+.fileAttach1 {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 16px; 
+    height: 70%; 
+    margin-top: 12px;
+}
+
+.fileAttach2 {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 16px; 
+}
+

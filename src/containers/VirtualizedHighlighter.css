@@ -1,0 +1,7 @@
+.react-select__syntax-highlighter {
+    width: 70%; 
+    float: right; 
+    max-height: 80vh;
+    overflow-y: scroll;
+}
+
