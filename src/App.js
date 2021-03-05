@@ -18,6 +18,7 @@ import ScopedCssBaseline from "@material-ui/core/ScopedCssBaseline";
 import ListAltRoundedIcon from '@material-ui/icons/ListAltRounded';
 import PowerSettingsNewRoundedIcon from '@material-ui/icons/PowerSettingsNewRounded';
 import SettingsRoundedIcon from '@material-ui/icons/SettingsRounded';
+import FiberNewIcon from '@material-ui/icons/FiberNew';
 
 export default function App() { 
   const [isAuthenticated, userHasAuthenticated] = useState(false);
@@ -53,7 +54,7 @@ export default function App() {
           <LinkContainer to="/dashboard">
             <Navbar.Brand>
               <div className="Logo"> 
-              / frag / ments / 
+                / frag / ments / 
               </div>
             </Navbar.Brand>
           </LinkContainer>
@@ -62,19 +63,25 @@ export default function App() {
             <Nav activeKey={window.location.pathname}>
               {isAuthenticated ? (
                 <>
+                  <LinkContainer to="/notes/new">
+                    <Nav.Link> 
+                      <Button variant="dark"> 
+                        <FiberNewIcon style={{ height: "25px", width: "25px", color: "#00a6bb" }} />    
+                      </Button>
+                    </Nav.Link>
+                  </LinkContainer>
+
                    <LinkContainer to="/">
                     <Nav.Link>
-                      <Button variant="light"> 
+                      <Button variant="outline-dark"> 
                         <ListAltRoundedIcon size="48px" /> 
                       </Button> 
                     </Nav.Link>
                   </LinkContainer>
 
-                
-
                   <LinkContainer to="/settings">
                     <Nav.Link> 
-                      <Button variant="light"> 
+                      <Button variant="outline-dark"> 
                           <SettingsRoundedIcon />    
                       </Button>
                     </Nav.Link>
@@ -82,7 +89,7 @@ export default function App() {
 
                   <div className="Logout"> 
                     <Nav.Link onClick={handleLogout}>
-                      <Button variant="dark"> 
+                      <Button variant="outline-danger"> 
                         <PowerSettingsNewRoundedIcon />
                       </Button> 
                     </Nav.Link>

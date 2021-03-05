@@ -48,7 +48,7 @@ export default function Login() {
                 <div className="Login">
                     <Form onSubmit={handleSubmit}>
 
-                    <hr />
+                    {/* <hr /> */}
                     <Form.Group size="lg" controlId="email">
                     <Form.Label>
                         <h5> Email </h5>

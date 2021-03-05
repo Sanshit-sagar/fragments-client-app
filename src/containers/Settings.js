@@ -6,41 +6,41 @@ import config from "../config";
 import { LinkContainer } from "react-router-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 
-import VirtualizedHighlighter from './VirtualizedHighlighter'; 
+import { Auth } from "aws-amplify";
+
+import Button from '@material-ui/core/Button';
+import './Settings.css'; 
 
 export default function Settings() {
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
 
-  function billUser(details) {
-    return API.post("notes", "/billing", {
-      body: details
-    });
-  }
-
   return (
-    <div className="Settings">
-        <LinkContainer to="/settings/email">
-          <LoaderButton block bsSize="large">
-            <h5> Update Email </h5> 
-          </LoaderButton>
-        </LinkContainer>
-        <LinkContainer to="/settings/password">
-          <LoaderButton block dark bsSize="large">
-            <h5> Update Password </h5> 
-          </LoaderButton>
-        </LinkContainer>
-      {/* <hr />
-     */}
+
+    <div className='settings-box'>
+        <div style={{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            justifyContent: 'flex-end', 
+            height: '100%', 
+          }}
+        >
+          <h2> User, Name </h2>
+       
+          <LinkContainer to="/settings/email"  style={{ margin: '5px' }} >
+            <LoaderButton bsSize="small">
+              <h5> Update Email </h5> 
+            </LoaderButton>
+          </LinkContainer>
+          
+          <LinkContainer to="/settings/password" style={{ margin: '5px' }}>
+            <LoaderButton bsSize="small">
+              <h5> Update Password </h5> 
+            </LoaderButton>
+          </LinkContainer>
+
+      
+        </div>
     </div>
   );
 }
-
-// export default function Settings() {
-
-//   return (
-
-//     <VirtualizedHighlighter /> 
-
-//   );
-// }

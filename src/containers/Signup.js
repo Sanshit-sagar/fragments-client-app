@@ -93,7 +93,7 @@ export default function Signup() {
             <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="email" size="lg">
                   
-                    <hr />
+                    {/* <hr /> */}
                     <Form.Label>
                         <h5> Email</h5>
                     </Form.Label> 

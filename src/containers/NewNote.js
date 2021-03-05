@@ -20,6 +20,7 @@ import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField'; 
 
 import { Button } from "react-bootstrap"; 
+
 import { 
     FormControl,
     Paper,
@@ -36,6 +37,7 @@ import {
     monoBlue, nightOwl, grayscale,purebasic, monokaiSublime, 
     tomorrowNightBlue, tomorrowNightBright, tomorrowNightEighties,
 } from "react-syntax-highlighter/dist/esm/styles/hljs";
+
 
 import LoyaltyOutlinedIcon from '@material-ui/icons/LoyaltyOutlined';
 import LoyaltyRoundedIcon from '@material-ui/icons/LoyaltyRounded'; 
@@ -61,11 +63,11 @@ function NewNote() {
     const history = useHistory();
 
     const file = useRef(null);
-    const [attachmentName, setAttachmentName] = useState("No Attachment"); 
+    const [attachmentName, setAttachmentName] = useState(""); 
 
-    const [moniker, setMoniker] = useState("@"); 
-    const [primaryTags, setPrimaryTags] = useState("#");
-    const [secondaryTags, setSecondaryTags] = useState("#");
+    const [moniker, setMoniker] = useState(""); 
+    const [primaryTags, setPrimaryTags] = useState("");
+    const [secondaryTags, setSecondaryTags] = useState("");
 
     const [content, setContent] = useState("");
     const [isLoading, setIsLoading] = useState(false);
@@ -83,6 +85,10 @@ function NewNote() {
     
     function validateForm() { 
         return content.length > 0;
+    } 
+
+    function attachmentExists() {
+        return attachmentName.length > 0; 
     }
     
     function handleFileChange(event) { 
@@ -156,12 +162,6 @@ function NewNote() {
 
     function AttachmentCard() {
         return (
-            // <Paper style={{ 
-            //     minHeight: "10vh", 
-            //     maxHeight: "10vh",
-            //     margin: '2.5px 0 0 0'
-            //   }}
-            // >
               <FormControl style={{ 
                   display: "flex", 
                   flexDirection:"row", 
@@ -169,34 +169,32 @@ function NewNote() {
                   }}
               >      
 
-              
-
               <div style = {{ display: 'flex', flexDirection: 'row' }}> 
-                    
-                    <Button 
-                        className="fileAttach1"
-                        variant="outline-dark" 
-                        block 
-                        size="sm" 
-                        style={{ width:"100%", height: "8vh", margin: '0px'}}> 
-                    
-                        <div style = {{ display: 'flex', flexDirection: 'row' }}>
-                            <Button variant="link" style = {{ width: "20%" }}>
-                                <AttachFileIcon size={18}/> 
-                            </Button> 
-
-                            <input 
-                                type = "file"
-                                onChange = { handleFileChange } 
-                                style = {{ width: "100%", height: "100%", marginLeft: '20%', opacity:0 }}
-                            /> 
-                             
-                        </div> 
+                 
+                        <Button 
+                            className="fileAttach1"
+                            variant={attachmentExists() ? "info" : "dark"} 
+                            block 
+                            size="sm" 
+                            style={{ width:"100%", height: "8vh", margin: '0px', paddingLeft: '45%', paddingRight: '40%'}}> 
+                        
+                            <div style = {{ display: 'flex', flexDirection: 'row', alignContent: 'center' }}>
                             
-                    </Button>
+                                
+                                <AttachFileIcon style={{ height: '4.5vh', width: '4.5vh' }}/> 
+
+                                <input 
+                                    type = "file"
+                                    onChange = { handleFileChange } 
+                                    style = {{ width: "10%", height: "100%", marginLeft: '20%', opacity:0 }}
+                                /> 
+                                
+                            </div> 
+                                
+                        </Button>
+                    
                 </div>
               </FormControl>
-            // </Paper>
         ); 
     }
 
@@ -206,16 +204,17 @@ function NewNote() {
                 display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
 
                 <Button 
-                    variant="dark"
+                    variant="info"
+                    disabled={!validateForm()}
                     onClick = {() => setViewMode(!viewMode)}
                     style = {{ marginRight: '3.5px', width: '31.5%' }} 
                 >  
-                    {viewMode ?  <CodeIcon /> : <EditIcon />  } 
+                    {viewMode ?  <EditIcon /> : <CodeIcon />  } 
                 </Button>
 
                 <Button 
                     disabled={!viewMode} 
-                    variant="outline-info"
+                    variant="info" 
                     onClick = {() => setLineNumbers(!lineNumbers) }
                     style = {{ marginRight: '3.5px', width: '31.5%' }} 
                 > 
@@ -225,7 +224,7 @@ function NewNote() {
 
                 <Button 
                     disabled={!viewMode} 
-                    variant="outline-info"
+                    variant="info"
                     style= {{ width: '31.5%' }} 
                     onClick = {() => setWrapLines(!wrapLines) 
                     }
@@ -243,7 +242,7 @@ function NewNote() {
     function LanguageSelector() {
         return (
             <div className = "languageSelector"> 
-            <FormControl style = {{ width: '95%', margin: '5px' }}>             
+            <FormControl style = {{ width: '95%', margin: '15px 5px 5px 5px' }}>             
                 <InputLabel htmlFor="grouped-native-select">
                     Language
                 </InputLabel>
@@ -278,38 +277,47 @@ function NewNote() {
                 <InputLabel htmlFor="grouped-native-select">Highlighter Theme</InputLabel>
                 
                 <Select 
-                labelId="label" 
-                id="selectHighlighterTheme"
-                value={highlighterTheme} 
-                onChange={(e) => 
-                    handleViewerThemeChange(e.target.value)
-                }
+                    labelId="label"
+                    disabled={!validateForm()} 
+                    id="selectHighlighterTheme"
+                    value={highlighterTheme} 
+                    onChange={(e) => 
+                        handleViewerThemeChange(e.target.value)
+                    }
                 > 
 
-                <MenuItem value={shadesOfPurple}> Shades Of Purple </MenuItem>
-                <MenuItem value={dark}> Dark </MenuItem>
-                <MenuItem value={github}> GitHub </MenuItem>
-                <MenuItem value={ocean}> Ocean </MenuItem>
-                <MenuItem value={atomOneLight}> Atom 1 Light </MenuItem>
-                <MenuItem value={brownPaper}> Brown Paper </MenuItem>
-                <MenuItem value={rainbow}> Rainbow </MenuItem>
-                <MenuItem value={googlecode}> GoogleCode </MenuItem>
-                <MenuItem value={monoBlue}> MonoBlue </MenuItem>
-                <MenuItem value={nightOwl}> NightOwl </MenuItem>
-                <MenuItem value={grayscale}> Grayscale </MenuItem>
-                <MenuItem value={stackoverflowDark}> StackOverflow Dark </MenuItem>
-                <MenuItem value={monokaiSublime}> Monokai Sublime </MenuItem>
-                <MenuItem value={purebasic}> Pure Basic </MenuItem> 
-                <MenuItem value={tomorrowNightBlue}> Tomorrow Night Blue </MenuItem> 
-                <MenuItem value={tomorrowNightBright}> Tomorrow Night Bright </MenuItem> 
-                <MenuItem value={tomorrowNightEighties}> Tomorrow Night Eighties </MenuItem> atelierCaveLight
-                <MenuItem value={atelierCaveLight}> Atelier Cave Light </MenuItem> 
-                <MenuItem value={atelierCaveDark}> Atelier Cave Dark </MenuItem> 
+                    <MenuItem value={shadesOfPurple}> Shades Of Purple </MenuItem>
+                    <MenuItem value={dark}> Dark </MenuItem>
+                    <MenuItem value={github}> GitHub </MenuItem>
+                    <MenuItem value={ocean}> Ocean </MenuItem>
+                    <MenuItem value={atomOneLight}> Atom 1 Light </MenuItem>
+                    <MenuItem value={brownPaper}> Brown Paper </MenuItem>
+                    <MenuItem value={rainbow}> Rainbow </MenuItem>
+                    <MenuItem value={googlecode}> GoogleCode </MenuItem>
+                    <MenuItem value={monoBlue}> MonoBlue </MenuItem>
+                    <MenuItem value={nightOwl}> NightOwl </MenuItem>
+                    <MenuItem value={grayscale}> Grayscale </MenuItem>
+                    <MenuItem value={stackoverflowDark}> StackOverflow Dark </MenuItem>
+                    <MenuItem value={monokaiSublime}> Monokai Sublime </MenuItem>
+                    <MenuItem value={purebasic}> Pure Basic </MenuItem> 
+                    <MenuItem value={tomorrowNightBlue}> Tomorrow Night Blue </MenuItem> 
+                    <MenuItem value={tomorrowNightBright}> Tomorrow Night Bright </MenuItem> 
+                    <MenuItem value={tomorrowNightEighties}> Tomorrow Night Eighties </MenuItem> atelierCaveLight
+                    <MenuItem value={atelierCaveLight}> Atelier Cave Light </MenuItem> 
+                    <MenuItem value={atelierCaveDark}> Atelier Cave Dark </MenuItem>
                 </Select>
             </FormControl>
             </div> 
         );
     }
+
+    function getSubmitButtonTheme() {
+        return validateForm() ? "outline-success" : "outline-dark"; 
+    }
+
+    // function getAttachButtonTheme() {
+    //     return attachmentExists() ? "outline"
+    // }
 
 
     return (
@@ -366,13 +374,11 @@ function NewNote() {
                         }
 
                     <div style = {{ 
-                        height: '80vh', width: '25%', backgroundColor: "#f8f9fa"
+                        height: '77.5vh', width: '25%', backgroundColor: "#f8f9fa"
                         }}> 
 
                         <div> 
-                            <EditorAndViewerOptionButtons />
-                            <LanguageSelector /> 
-                            <HighlighterThemeSelector />
+                            
                         </div>
 
                         <div > 
@@ -388,21 +394,25 @@ function NewNote() {
                             
                                     <ListItemText 
                                         primary = { 
-                                            <TextField  id="filled-basic" 
-                                                        variant="filled" 
-                                                        placeholder="@" 
+                                            <TextField  id="standard-basic" 
+                                                        placeholder="@name-me" 
                                                         size="large"
                                                         value={ moniker } 
                                                         onChange={(e) => 
                                                             handleMonikerChange(e.target.value)
                                                         }
+                                                        style={{ height: '4vh' }}
                                             />
                                         } 
                                     />
                                 </ListItem>
                             </List>
 
-                            <Divider />
+                            <EditorAndViewerOptionButtons />
+                            <LanguageSelector /> 
+                            <HighlighterThemeSelector />
+
+                        
 
                             <List 
                                 component = "nav" 
@@ -415,14 +425,14 @@ function NewNote() {
 
                                     <ListItemText 
                                         primary= {
-                                            <TextField  id="filled-basic" 
-                                                        variant="outlined" 
-                                                        placeholder="#"
+                                            <TextField  id="standard-basic" 
+                                                        placeholder="#tag-one [optional]"
                                                         size = "large"
                                                         value={ primaryTags } 
                                                         onChange={(e) => 
                                                             handlePrimaryTagsUpdate(e.target.value)
                                                         }
+                                                        style={{ height: '5vh', marginTop:"10px" }}
                                             /> 
                                         }
                                     />
@@ -435,14 +445,14 @@ function NewNote() {
 
                                     <ListItemText 
                                         secondary= {
-                                            <TextField  id="filled-basic" 
-                                                        variant="outlined" 
+                                            <TextField  id="standard-basic" 
                                                         size = "large"
-                                                        placeholder="#" 
+                                                        placeholder="#tag-two [optional]" 
                                                         value={ secondaryTags } 
                                                         onChange={(e) => 
                                                             handleSecondaryTagsUpdate(e.target.value)
-                                                        }                  
+                                                        }         
+                                                        style={{ height: '5vh' }}         
                                             />
                                         }
                                     />
@@ -450,17 +460,18 @@ function NewNote() {
                             </List>
                         </div>
 
-                        <div style = {{ margin: '5px 5px 10px 5px' }}> 
+                        <div style = {{ margin: '0px 5px 5px 5px' }}> 
                             <AttachmentCard /> 
                         </div>
 
                     
-                        <div >
+                        <div style={{ marginTop: "20px" }}>
                             <LoaderButton 
                                 block 
                                 type = "submit" 
                                 size = "sm" 
-                                variant = "outline-success" 
+                                disabled={!validateForm()}
+                                variant = {getSubmitButtonTheme()}
                                 isLoading = {isLoading} 
                                 disabled = {!validateForm()}
                                 style = {{ margin: '5px', width: '97%' }}
@@ -475,7 +486,7 @@ function NewNote() {
                                 block 
                                 size = "sm" 
                                 variant = "outline-danger" 
-                                isLoading = {isLoading} 
+                                isLoading = {false}  
                                 style = {{ margin: '5px', width: '97%' }}
                             >
                                 <h5> 

@@ -8,6 +8,7 @@ import { BsPencilSquare } from "react-icons/bs";
 import { LinkContainer } from "react-router-bootstrap"; 
 import { Link } from "react-router-dom"; 
 import { Chip } from "@material-ui/core"; 
+import AddBoxIcon from '@material-ui/icons/AddBox';
 
 export default function Home() {
   const [notes, setNotes] = useState([]);
@@ -43,9 +44,11 @@ export default function Home() {
       
       
         <LinkContainer to="/notes/new">
-          <ListGroup.Item action variant="dark" className="py-3 text-truncate">
-            <BsPencilSquare size={17} />
-            <span > New Snippet </span>
+          <ListGroup.Item action variant="info" className="py-3 text-truncate">
+            <div style={{ display:'flex', flexDirection:'row', justifyContent: 'center'}}>
+                <AddBoxIcon style={{height: "35px", width: "45px" }} /> 
+                <h5 style={{ marginLeft: "20px", marginTop: "5px"}} > Create New Snippet </h5>
+            </div> 
           </ListGroup.Item>
         </LinkContainer>
 
