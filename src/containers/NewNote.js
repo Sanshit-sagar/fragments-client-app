@@ -79,7 +79,6 @@ function NewNote() {
 
     const [language, setLanguage] = useState("javascript")
     const [highlighterTheme, setHighlighterTheme] = useState(dark);
-    const [editorTheme, setEditorTheme] = useState("terminal"); 
     
     const classes = useStyles();
     
@@ -199,12 +198,14 @@ function NewNote() {
     }
 
     function EditorAndViewerOptionButtons() {
+        
+
         return (
             <div className="optionButtons" style = {{ 
                 display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
 
                 <Button 
-                    variant="info"
+                    variant="outline-dark"
                     disabled={!validateForm()}
                     onClick = {() => setViewMode(!viewMode)}
                     style = {{ marginRight: '3.5px', width: '31.5%' }} 
@@ -214,7 +215,7 @@ function NewNote() {
 
                 <Button 
                     disabled={!viewMode} 
-                    variant="info" 
+                    variant="outline-dark" 
                     onClick = {() => setLineNumbers(!lineNumbers) }
                     style = {{ marginRight: '3.5px', width: '31.5%' }} 
                 > 
@@ -224,7 +225,7 @@ function NewNote() {
 
                 <Button 
                     disabled={!viewMode} 
-                    variant="info"
+                    variant="outline-dark"
                     style= {{ width: '31.5%' }} 
                     onClick = {() => setWrapLines(!wrapLines) 
                     }

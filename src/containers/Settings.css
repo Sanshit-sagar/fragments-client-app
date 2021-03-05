@@ -1,9 +1,16 @@
 .settings-box {
   position: absolute;
+  top: '30%';
+  left: '30%';  
   width: '40%';
   height: '40%';
-  top: '30%';
-  left: '30%';
+  background-color: green;
+}
+
+.settings-box__update-buttons {
+  display: flex; 
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
 /* @media all and (min-width: 480px) {
@@ -17,3 +24,10 @@
       margin-bottom: 15px;
     } 
   } */
+/* 
+  style={{ 
+    display: 'flex', 
+    flexDirection: 'column', 
+    justifyContent: 'flex-end', 
+    height: '100%', 
+  }} */

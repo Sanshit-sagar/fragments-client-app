@@ -6,35 +6,40 @@ import config from "../config";
 import { LinkContainer } from "react-router-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 
-import { Auth } from "aws-amplify";
-
-import Button from '@material-ui/core/Button';
-import './Settings.css'; 
+import VirtualizedHighlighter from './VirtualizedHighlighter'; 
 
 export default function Settings() {
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
 
-  return (
+  // function billUser(details) {
+  //   return API.post("notes", "/billing", {
+  //     body: details
+  //   });
+  // }
 
-    <div className='settings-box'>
+
+  return (
+    <div className="Settings" style={{ 
+            position: "absolute", 
+            top: '30%', left: '30%', width: '40%', height: '40%',
+      }}>
+
+        {/* <h2 style={{ width: '100%' }}> Name, Here </h2>    */}
         <div style={{ 
-            display: 'flex', 
-            flexDirection: 'column', 
-            justifyContent: 'flex-end', 
-            height: '100%', 
+            display: 'flex', flexDirection: 'column', 
+            justifyContent: 'flex-end', height: '100%'
           }}
         >
-          <h2> User, Name </h2>
-       
+
           <LinkContainer to="/settings/email"  style={{ margin: '5px' }} >
-            <LoaderButton bsSize="small">
+            <LoaderButton variant="info" bsSize="small">
               <h5> Update Email </h5> 
             </LoaderButton>
           </LinkContainer>
           
           <LinkContainer to="/settings/password" style={{ margin: '5px' }}>
-            <LoaderButton bsSize="small">
+            <LoaderButton variant="info" bsSize="small">
               <h5> Update Password </h5> 
             </LoaderButton>
           </LinkContainer>

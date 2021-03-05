@@ -65,8 +65,8 @@ export default function App() {
                 <>
                   <LinkContainer to="/notes/new">
                     <Nav.Link> 
-                      <Button variant="dark"> 
-                        <FiberNewIcon style={{ height: "25px", width: "25px", color: "#00a6bb" }} />    
+                      <Button size="small" variant="outline-dark" > 
+                        <FiberNewIcon style={{ color: "#4b00b6" }} />    
                       </Button>
                     </Nav.Link>
                   </LinkContainer>

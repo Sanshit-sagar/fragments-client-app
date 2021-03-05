@@ -44,9 +44,9 @@ export default function Home() {
       
       
         <LinkContainer to="/notes/new">
-          <ListGroup.Item action variant="info" className="py-3 text-truncate">
+          <ListGroup.Item action>
             <div style={{ display:'flex', flexDirection:'row', justifyContent: 'center'}}>
-                <AddBoxIcon style={{height: "35px", width: "45px" }} /> 
+                <AddBoxIcon style={{height: "35px", width: "45px", color: '#4b00b6' }} /> 
                 <h5 style={{ marginLeft: "20px", marginTop: "5px"}} > Create New Snippet </h5>
             </div> 
           </ListGroup.Item>
