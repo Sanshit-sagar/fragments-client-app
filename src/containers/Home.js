@@ -4,11 +4,22 @@ import { useAppContext } from "../libs/contextLib";
 import { onError } from "../libs/errorLib";
 import { API } from "aws-amplify"; 
 import "./Home.css";
-import { BsPencilSquare } from "react-icons/bs"; 
+// import { BsPencilSquare } from "react-icons/bs"; 
 import { LinkContainer } from "react-router-bootstrap"; 
 import { Link } from "react-router-dom"; 
 import { Chip } from "@material-ui/core"; 
 import AddBoxIcon from '@material-ui/icons/AddBox';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+
+// import {
+//   ReactiveBase,
+//   CategorySearch,
+//   SingleRange,
+//   ResultCard,
+//   ReactiveList,
+// } from '@appbaseio/reactivesearch';
+
 
 export default function Home() {
   const [notes, setNotes] = useState([]);
@@ -38,23 +49,43 @@ export default function Home() {
     return API.get("notes", "/notes");
   }
 
+  // const filterOptions = createFilterOptions({
+  //   matchFrom: 'start',
+  //   stringify: option => option.title + "--" + option.primaryTags
+  // });
+
   function renderNotesList() {
     return (
       <div className="HomePage" style={{ height: "100vh" }}>
       
       
-        <LinkContainer to="/notes/new">
+        {/* <LinkContainer to="/notes/new">
           <ListGroup.Item action>
             <div style={{ display:'flex', flexDirection:'row', justifyContent: 'center'}}>
                 <AddBoxIcon style={{height: "35px", width: "45px", color: '#4b00b6' }} /> 
                 <h5 style={{ marginLeft: "20px", marginTop: "5px"}} > Create New Snippet </h5>
             </div> 
           </ListGroup.Item>
-        </LinkContainer>
+        </LinkContainer> */}
 
         <br /> 
 
-      
+        <div style = {{ width: "100%" }}>
+          
+          <Autocomplete
+            id="combo-box-demo"
+            options={notes}
+            groupBy={(option) => (option.primaryTags)}
+            getOptionLabel={(option) => option.moniker}
+            style={{ width: '100%', marginBottom: '15px'}}
+            renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined" size="large" />}
+          />
+
+          <OpenIconSpeedDial /> 
+        
+        </div> 
+
+
         {notes.map(({ noteId, content, moniker, primaryTags, secondaryTags, createdAt }) => (
           <LinkContainer key={noteId} to={`/notes/${noteId}`} >
             
@@ -88,6 +119,56 @@ export default function Home() {
             
           </LinkContainer>
         ))}
+      </div>
+    );
+  }
+
+  const actions = [
+    { icon: <FileCopyIcon />, name: 'Copy' },
+    { icon: <SaveIcon />, name: 'Save' },
+    { icon: <PrintIcon />, name: 'Print' },
+    { icon: <ShareIcon />, name: 'Share' },
+    { icon: <FavoriteIcon />, name: 'Like' },
+  ];
+  
+  function OpenIconSpeedDial() {
+    const classes = useStyles();
+    const [open, setOpen] = React.useState(false);
+    const [hidden, setHidden] = React.useState(false);
+  
+    const handleVisibility = () => {
+      setHidden((prevHidden) => !prevHidden);
+    };
+  
+    const handleOpen = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = () => {
+      setOpen(false);
+    };
+  
+    return (
+      <div className={classes.root}>
+        <Button onClick={handleVisibility}>Toggle Speed Dial</Button>
+        <SpeedDial
+          ariaLabel="SpeedDial openIcon example"
+          className={classes.speedDial}
+          hidden={hidden}
+          icon={<SpeedDialIcon openIcon={<EditIcon />} />}
+          onClose={handleClose}
+          onOpen={handleOpen}
+          open={open}
+        >
+          {actions.map((action) => (
+            <SpeedDialAction
+              key={action.name}
+              icon={action.icon}
+              tooltipTitle={action.name}
+              onClick={handleClose}
+            />
+          ))}
+        </SpeedDial>
       </div>
     );
   }
