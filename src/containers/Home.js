@@ -4,21 +4,37 @@ import { useAppContext } from "../libs/contextLib";
 import { onError } from "../libs/errorLib";
 import { API } from "aws-amplify"; 
 import "./Home.css";
-// import { BsPencilSquare } from "react-icons/bs"; 
+
 import { LinkContainer } from "react-router-bootstrap"; 
 import { Link } from "react-router-dom"; 
-import { Chip } from "@material-ui/core"; 
-import AddBoxIcon from '@material-ui/icons/AddBox';
 import TextField from '@material-ui/core/TextField';
+
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-// import {
-//   ReactiveBase,
-//   CategorySearch,
-//   SingleRange,
-//   ResultCard,
-//   ReactiveList,
-// } from '@appbaseio/reactivesearch';
+import SpeedDial from '@material-ui/lab/SpeedDial';
+import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
+import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
+import FileCopyIcon from '@material-ui/icons/FileCopyOutlined';
+import SaveIcon from '@material-ui/icons/Save';
+import PrintIcon from '@material-ui/icons/Print';
+import ShareIcon from '@material-ui/icons/Share';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import { makeStyles } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box'; 
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+
+  },
+}));
+
+const actions = [
+  { icon: <FileCopyIcon />, name: 'Copy' },
+  { icon: <SaveIcon />, name: 'Save' },
+  { icon: <PrintIcon />, name: 'Print' },
+  { icon: <ShareIcon />, name: 'Share' },
+  { icon: <FavoriteIcon />, name: 'Like' },
+];
 
 
 export default function Home() {
@@ -49,76 +65,64 @@ export default function Home() {
     return API.get("notes", "/notes");
   }
 
-  // const filterOptions = createFilterOptions({
-  //   matchFrom: 'start',
-  //   stringify: option => option.title + "--" + option.primaryTags
-  // });
-
   function renderNotesList() {
     return (
-      <div className="HomePage" style={{ height: "100vh" }}>
-      
-      
-        {/* <LinkContainer to="/notes/new">
-          <ListGroup.Item action>
-            <div style={{ display:'flex', flexDirection:'row', justifyContent: 'center'}}>
-                <AddBoxIcon style={{height: "35px", width: "45px", color: '#4b00b6' }} /> 
-                <h5 style={{ marginLeft: "20px", marginTop: "5px"}} > Create New Snippet </h5>
-            </div> 
-          </ListGroup.Item>
-        </LinkContainer> */}
+      <div className="HomePage" style={{ height: "90vh" }}>
+        {/* <LinkContainer to="/notes/new"> */}
 
-        <br /> 
-
-        <div style = {{ width: "100%" }}>
-          
+        <div style = {{ width: "100%", 
+                        display: 'flex', 
+                        flexDirection: 'row', 
+                        justifyContent: 'space-between' 
+                      }}>
           <Autocomplete
             id="combo-box-demo"
             options={notes}
             groupBy={(option) => (option.primaryTags)}
             getOptionLabel={(option) => option.moniker}
             style={{ width: '100%', marginBottom: '15px'}}
-            renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined" size="large" />}
-          />
-
-          <OpenIconSpeedDial /> 
-        
+            renderInput={
+              (params) => 
+                <TextField {...params} 
+                  label="Search your cache" 
+                  variant="outlined" 
+                  size="medium" 
+                />
+              }
+          />   
+          <div>  
+            <OpenIconSpeedDial/> 
+          </div>   
         </div> 
 
-
-        {notes.map(({ noteId, content, moniker, primaryTags, secondaryTags, createdAt }) => (
-          <LinkContainer key={noteId} to={`/notes/${noteId}`} >
-            
-            <ListGroup.Item action variant="outline-info" horizontal>
-             
-                  
-              <div style={{ display: "flex", flexDirection: "row" }}>
-                <span className="font-weight-bold" style = {{ marginRight: "45px" }}>
-                  {moniker.substring(1)} 
-                </span>
-                
-                <a> {content.trim().split("\n")[0].substring(0,21) + "..."} </a>
-
-                <br />
-
-              <div className="tagsAndTimestamp" style={{ display: "flex", marginLeft:"auto" }}> 
+        <div style={{ display:'flex', height: '60vh', flexDirection: 'column', flexWrap: 'wrap', marginTop: '10px'}}> 
+          {notes.map(({ noteId, content, moniker, primaryTags, secondaryTags, createdAt }) => (
                
-                <Chip label = {primaryTags} style = {{ marginRight: "10px" }} /> 
-                <br />
-                <Chip label = {secondaryTags} style = {{ marginRight: "10px" }} /> 
-                <br />
-                <span className="text-muted">
-                  {new Date(createdAt).toLocaleString()} 
-                </span>
-              </div>
-
-              <br /> 
-            </div> 
-
-            </ListGroup.Item>
-            
-          </LinkContainer>
-        ))}
+               <LinkContainer key={noteId} to={`/notes/${noteId}`}>
+                  <div class="box" style={{ backgroundColor: 'black' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                      <span className="font-weight-bold" style = {{ marginRight: "45px", marginTop: '10px', marginBottom: '15px' }}>
+                        {moniker.substring(1)} 
+                      </span>
+                      <span> 
+                        {content.trim().split("\n")[0].substring(0,40) + "..."}
+                      </span>
+                    </div> 
+                  <div class="level-left"> 
+                    <div className="tagsAndTimestamp" style={{ display: "flex", marginLeft:"auto", flexDirection: 'column'}}> 
+                      <div class="tags has-addons" style={{ margin: '10px' }}>
+                        <span class="tag is-link is-light"> { primaryTags } </span>
+                        <span class="tag is-primary is-light"> { secondaryTags } </span> 
+                      </div> 
+                      <span className="text-muted">
+                        {new Date(createdAt).toLocaleString()} 
+                      </span>
+                    </div>
+                  </div> 
+                </div>
+              </LinkContainer>
+          ))}
+          </div>
       </div>
     );
   }
@@ -126,39 +130,44 @@ export default function Home() {
   const actions = [
     { icon: <FileCopyIcon />, name: 'Copy' },
     { icon: <SaveIcon />, name: 'Save' },
-    { icon: <PrintIcon />, name: 'Print' },
     { icon: <ShareIcon />, name: 'Share' },
     { icon: <FavoriteIcon />, name: 'Like' },
   ];
   
   function OpenIconSpeedDial() {
     const classes = useStyles();
+    const [direction, setDirection] = React.useState('left');
     const [open, setOpen] = React.useState(false);
     const [hidden, setHidden] = React.useState(false);
-  
-    const handleVisibility = () => {
-      setHidden((prevHidden) => !prevHidden);
+
+    const handleDirectionChange = (event) => {
+      setDirection(event.target.value);
     };
-  
-    const handleOpen = () => {
-      setOpen(true);
+
+    const handleHiddenChange = (event) => {
+      setHidden(event.target.checked);
     };
-  
+
     const handleClose = () => {
       setOpen(false);
     };
-  
+
+    const handleOpen = () => {
+      setOpen(true);
+    };
+
+
     return (
-      <div className={classes.root}>
-        <Button onClick={handleVisibility}>Toggle Speed Dial</Button>
+      <div className="bob"> 
         <SpeedDial
-          ariaLabel="SpeedDial openIcon example"
+          ariaLabel="SpeedDial example"
           className={classes.speedDial}
           hidden={hidden}
-          icon={<SpeedDialIcon openIcon={<EditIcon />} />}
+          icon={<SpeedDialIcon />}
           onClose={handleClose}
           onOpen={handleOpen}
           open={open}
+          direction={direction}
         >
           {actions.map((action) => (
             <SpeedDialAction
@@ -194,7 +203,15 @@ export default function Home() {
   function renderNotes() {
     return (
       <div className="notes">
-        <ListGroup>{!isLoading && renderNotesList()}</ListGroup>
+         
+        <ListGroup>
+          {
+          !isLoading && 
+            <Box> 
+              {renderNotesList()}
+            </Box>
+           
+        }</ListGroup>
       </div>
     );
   }

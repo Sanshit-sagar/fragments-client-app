@@ -159,6 +159,30 @@ function NewNote() {
         });
     }
 
+    function AttachFileBulma() {
+        return (
+            <div class="file has-name is-fullwidth">
+            <label class="file-label">
+                <input class="file-input" type="file" onChange={handleFileChange} name="attachment" />
+                <span class="file-cta">
+                <span class="file-icon">
+                    <i class="fas fa-upload"></i>
+                </span>
+                <span class="file-label">
+                    Choose a file…
+                </span>
+                </span>
+                <span class="file-name">
+                    { attachmentExists() ? 
+                    (attachmentName.length > 15 ? attachmentName.substring(0, 15) : attachmentName)
+                    : ("No File Attached")
+                    }
+                </span>
+            </label>
+            </div>
+        );
+    }
+
     function AttachmentCard() {
         return (
               <FormControl style={{ 
@@ -462,7 +486,7 @@ function NewNote() {
                         </div>
 
                         <div style = {{ margin: '0px 5px 5px 5px' }}> 
-                            <AttachmentCard /> 
+                            <AttachFileBulma /> 
                         </div>
 
                     
