@@ -90,9 +90,9 @@ export default function Home() {
                 />
               }
           />   
-          <div>  
+          {/* <div>  
             <OpenIconSpeedDial/> 
-          </div>   
+          </div>    */}
         </div> 
 
         <div style={{ display:'flex', height: '60vh', flexDirection: 'column', flexWrap: 'wrap', marginTop: '10px'}}> 
@@ -175,7 +175,8 @@ export default function Home() {
               icon={action.icon}
               tooltipTitle={action.name}
               onClick={handleClose}
-            />
+           / >
+             
           ))}
         </SpeedDial>
       </div>

@@ -15,10 +15,30 @@ import { Button } from "react-bootstrap";
 import ErrorBoundary from "./components/ErrorBoundary"; 
 import ScopedCssBaseline from "@material-ui/core/ScopedCssBaseline"; 
 
-import ListAltRoundedIcon from '@material-ui/icons/ListAltRounded';
-import PowerSettingsNewRoundedIcon from '@material-ui/icons/PowerSettingsNewRounded';
-import SettingsRoundedIcon from '@material-ui/icons/SettingsRounded';
-import FiberNewIcon from '@material-ui/icons/FiberNew';
+// import ListAltRoundedIcon from '@material-ui/icons/ListAltRounded';
+// import PowerSettingsNewRoundedIcon from '@material-ui/icons/PowerSettingsNewRounded';
+// import SettingsRoundedIcon from '@material-ui/icons/SettingsRounded';
+// import FiberNewIcon from '@material-ui/icons/FiberNew';
+import { makeStyles } from '@material-ui/core/styles';
+
+import SpeedDial from '@material-ui/lab/SpeedDial';
+import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
+import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
+import FileCopyIcon from '@material-ui/icons/FileCopyOutlined';
+import SaveIcon from '@material-ui/icons/Save';
+import PrintIcon from '@material-ui/icons/Print';
+import ShareIcon from '@material-ui/icons/Share';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+
+const useStyles = makeStyles({
+  root: {
+
+  },
+  speedDial: {
+
+  },
+});
+
 
 export default function App() { 
   const [isAuthenticated, userHasAuthenticated] = useState(false);
@@ -46,6 +66,63 @@ export default function App() {
     setIsAuthenticating(false); 
   }
 
+  const actions = [
+    { icon: <FileCopyIcon />, name: 'Copy' },
+    { icon: <SaveIcon />, name: 'Save' },
+    { icon: <PrintIcon />, name: 'Print' },
+    { icon: <ShareIcon />, name: 'Share' },
+    { icon: <FavoriteIcon />, name: 'Like' },
+  ];
+
+  function OpenIconSpeedDial() {
+    const classes = useStyles();
+    const [direction, setDirection] = React.useState('left');
+    const [open, setOpen] = React.useState(false);
+    const [hidden, setHidden] = React.useState(false);
+
+    // const handleDirectionChange = (event) => {
+    //   setDirection(event.target.value);
+    // };
+
+    // const handleHiddenChange = (event) => {
+    //   setHidden(event.target.checked);
+    // };
+
+    const handleClose = () => {
+      setOpen(false);
+    };
+
+    const handleOpen = () => {
+      setOpen(true);
+    };
+
+
+    return (
+      <div className="bob"> 
+        <SpeedDial
+          ariaLabel="SpeedDial example"
+          className={classes.speedDial}
+          hidden={hidden}
+          icon={<SpeedDialIcon />}
+          onClose={handleClose}
+          onOpen={handleOpen}
+          open={open}
+          direction={direction}
+        >
+          {actions.map((action) => (
+            <SpeedDialAction
+              key={action.name}
+              icon={action.icon}
+              tooltipTitle={action.name}
+              onClick={handleClose}
+           / >
+             
+          ))}
+        </SpeedDial>
+      </div>
+    );
+  }
+
   return (
     !isAuthenticating && (
       <ScopedCssBaseline> 
@@ -58,7 +135,7 @@ export default function App() {
               </div>
             </Navbar.Brand>
           </LinkContainer>
-          <Navbar.Toggle />
+          {/* <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">
             <Nav activeKey={window.location.pathname}>
               {isAuthenticated ? (
@@ -114,7 +191,8 @@ export default function App() {
                 </>
               )}
             </Nav>
-          </Navbar.Collapse>
+          </Navbar.Collapse> */}
+          <OpenIconSpeedDial /> 
         </Navbar>
         <ErrorBoundary>
           <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
